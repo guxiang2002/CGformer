@@ -7,6 +7,7 @@ import pytorch_lightning as pl
 from argparse import ArgumentParser
 from LightningTools.pl_model import pl_model
 from LightningTools.dataset_dm import DataModule
+from LightningTools.callbacks import TrainingTimeMonitor
 from pytorch_lightning import loggers as pl_loggers
 from pytorch_lightning.profiler import SimpleProfiler
 from pytorch_lightning.strategies.ddp import DDPStrategy
@@ -70,7 +71,8 @@ if __name__ == '__main__':
             resume_from_checkpoint=None,
             callbacks=[
                 checkpoint_callback,
-                LearningRateMonitor(logging_interval='step')
+                LearningRateMonitor(logging_interval='step'),
+                TrainingTimeMonitor(log_every_n_steps=config['log_every_n_steps'])
             ],
             logger=tb_logger,
             profiler=profiler,
@@ -92,4 +94,3 @@ if __name__ == '__main__':
         trainer.test(model=model, datamodule=data_dm, ckpt_path=config['ckpt_path'])
 
     
-

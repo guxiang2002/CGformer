@@ -1,0 +1,76 @@
+##数据预处理
+python tools/preprocess_carla.py \
+  --data-root /data/guxiang/gx/dataset/CarlaData/Town10HD \
+  --output-root /data/guxiang/gx/dataset/CarlaData/Town10HD_preprocess \
+  --write-invalid
+
+##预训练
+CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py \
+  --config_path configs/4gpu-carla-cam-pretrain.py \
+  --log_folder 4gpu-carla-cam-pretrain \
+  --seed 7240 \
+  --pretrain \
+  --log_every_n_steps 100
+
+##整理预训练权重
+python organize_ckpt.py \
+  --source_path logs/4gpu-carla-cam-pretrain/tensorboard/version_0/checkpoints/last.ckpt \
+  --dst_path ckpts/efficientnet-seg-depth-carla.pth
+
+##训练命令
+CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py  \
+  --config_path configs/4gpu-carla-cam.py  \
+  --log_folder 4gpu-carla-cam  \
+  --seed 7240  \
+  --log_every_n_steps 100
+
+##评估命令
+CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py  \
+  --eval --ckpt_path /data/guxiang/gx/CGFormer/logs/4gpu-carla-cam/tensorboard/version_0/checkpoints/last.ckpt  \
+  --config_path configs/4gpu-carla-cam.py  \
+  --log_folder 4gpu-carla-cam-eval  \
+  --seed 7240  \
+  --log_every_n_steps 100
+
+##评估命令（保存pre）
+CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py  \
+  --eval --ckpt_path /data/guxiang/gx/CGFormer/logs/4gpu-carla-cam/tensorboard/version_0/checkpoints/last.ckpt  \
+  --config_path configs/4gpu-carla-cam.py  \
+  --log_folder 4gpu-carla-cam-eval  \
+  --seed 7240  \
+  --log_every_n_steps 100  \
+  --save_path pred
+
+##单张GT可视化
+xvfb-run -a env QT_QPA_PLATFORM=offscreen python tools/visualize_carla.py \
+  --source gt \
+  --split Val \
+  --scene scene_08 \
+  --frame 000000
+
+##GT可视化
+xvfb-run -a env QT_QPA_PLATFORM=offscreen python tools/visualize_carla.py    \
+  --source gt    \
+  --split Val    \
+  --scene scene_08
+  
+##pre可视化
+xvfb-run -a env QT_QPA_PLATFORM=offscreen python tools/visualize_carla.py \
+  --source pred \
+  --pred-root /data/guxiang/gx/CGFormer/pred \
+  --split Val \
+  --scene scene_08
+
+
+
+
+
+
+
+
+
+
+
+
+
+

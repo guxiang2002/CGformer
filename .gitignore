@@ -1,0 +1,34 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local Codex / editor artifacts
+.codex
+.vscode/
+
+# Training outputs
+logs/
+pred/
+pred_scene00/
+visualize_carla/
+
+# Checkpoints / weights
+ckpts/
+*.ckpt
+*.pth
+*.pt
+*.onnx
+
+# Large generated data artifacts
+*.label
+*.bin
+*.invalid
+*.occluded
+*.npy
+*.npz
+
+# Common temp / runtime files
+*.log
+*.tmp
+*.swp
+*.swo

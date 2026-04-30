@@ -1,6 +1,6 @@
-data_root = 'data/semantickitti'
-ann_file = 'data/semantickitti/labels'
-stereo_depth_root = 'data/semantickitti/depth'
+data_root = '/data/guxiang/gx/VoxDet/VoxDet-main/dataset/semantickittii/'
+ann_file = '/data/guxiang/gx/VoxDet/VoxDet-main/dataset/semantickittii/labels'
+stereo_depth_root = '/data/guxiang/gx/VoxDet/VoxDet-main/dataset/semantickittii/depth'
 camera_used = ['left']
 
 dataset_type = 'SemanticKITTIDataset'

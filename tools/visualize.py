@@ -243,10 +243,10 @@ def get_fov_mask(transform, intr):
 	return fov_mask
 
 sequence = '08'
-data_root = 'data/semantickitti/sequences'
-pred_root = 'CGFormer/sequences/08/predictions'
-write_root = 'data/codebase/visualize'
-gt_root = 'data/semantickitti/labels'
+data_root = '/data/guxiang/gx/VoxDet/VoxDet-main/dataset/semantickittii/sequences'
+pred_root = '/data/guxiang/gx/CGFormer/pred/sequences/scene_08/predictions/'
+write_root = '/data/guxiang/gx/CGFormer/visualize'
+gt_root = '/data/guxiang/gx/VoxDet/VoxDet-main/dataset/semantickittii/labels'
 calib_file = os.path.join(data_root, sequence, 'calib.txt')
 calib_all = {}
 with open(calib_file, "r") as f:
